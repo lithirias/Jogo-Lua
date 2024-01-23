@@ -86,6 +86,10 @@ function love.load()
     background = love.graphics.newImage("imagens/background.png")
     aviao.imagem = love.graphics.newImage(aviao.src)
     meteoro_img = love.graphics.newImage("imagens/meteoro.png")
+
+    musica_ambiente = love.audio.newSource("audios/ambiente.wav")
+    musica_ambiente:setLooping(true)
+    musica_ambiente:play()
 end
 
 function love.update(dt)
