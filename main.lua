@@ -14,15 +14,23 @@ aviao = {
 meteoros = {}
 
 function destroiAviao()
+
+    musica_destroi:play()
     aviao.src = "imagens/explosao_nave.png"
     aviao.imagem = love.graphics.newImage(aviao.src)
     aviao.largura = 55
     aviao.altura = 63
 end
 
+function trocaMusica()
+    musica_ambiente:stop()
+    game_over:play()
+end
+
 function checkColisao()
     for k, meteoro in pairs(meteoros) do
         if testaColisao(meteoro.x, meteoro.y, meteoro.largura, meteoro.altura, aviao.x, aviao.y, aviao.largura, aviao.altura) then
+            trocaMusica()
             destroiAviao()
             FIM_DE_JOGO = true
         end
@@ -87,9 +95,13 @@ function love.load()
     aviao.imagem = love.graphics.newImage(aviao.src)
     meteoro_img = love.graphics.newImage("imagens/meteoro.png")
 
-    musica_ambiente = love.audio.newSource("audios/ambiente.wav")
+    musica_ambiente = love.audio.newSource("audios/ambiente.wav", "stream")
     musica_ambiente:setLooping(true)
     musica_ambiente:play()
+
+    musica_destroi = love.audio.newSource("audios/destruicao.wav", "stream")
+    game_over = love.audio.newSource("audios/game_over.wav", "stream")
+
 end
 
 function love.update(dt)
